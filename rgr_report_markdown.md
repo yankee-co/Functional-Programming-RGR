@@ -58,36 +58,6 @@ F(n) = {
     
     ;; Поза діапазоном
     (t (error "n must be in range 1..20"))))
-
-;;; Оптимізована версія з мемоізацією
-(defun fibonacci-variant8-memo ()
-  "Створює мемоізовану версію функції для ефективних обчислень"
-  (let ((cache (make-hash-table)))
-    ;; Заповнюємо базові значення
-    (setf (gethash 1 cache) 1.0)
-    (setf (gethash 10 cache) 1.0)
-    
-    (lambda (n)
-      (or (gethash n cache)
-          (setf (gethash n cache)
-                (cond
-                  ((= n 1) 1.0)
-                  ((= n 10) 1.0)
-                  ((and (>= n 2) (<= n 9))
-                   (- (* 2 (funcall #'fibonacci-variant8-memo-helper 
-                                   (- n 1) cache))
-                      (cos n)))
-                  ((and (>= n 11) (<= n 20))
-                   (+ (* 5 (funcall #'fibonacci-variant8-memo-helper 
-                                   (- n 1) cache))
-                      (sin n)))
-                  (t (error "n must be in range 1..20"))))))))
-
-(defun fibonacci-variant8-memo-helper (n cache)
-  "Допоміжна функція для мемоізації"
-  (or (gethash n cache)
-      (setf (gethash n cache)
-            (fibonacci-variant8 n))))
 ```
 
 ## Тестові функції
